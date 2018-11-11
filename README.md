@@ -3,7 +3,9 @@ An open-source cuda library for image processing
 
 &nbsp;[![author Haibo](https://img.shields.io/badge/author-Haibo%20Wong-blue.svg?style=flat)](https://github.com/DasudaRunner/Object-Tracking)&nbsp;&nbsp;&nbsp;&nbsp;
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)<br>
-
+- &emsp;***Author**: Haibo Wang*<br>
+- &emsp;***Email**: dasuda2015@163.com*
+- &emsp;***Home Page**: <a href=dasuda.top>dasuda.top</a>*
 ## Function List
 
 ### Color space transformation
