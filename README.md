@@ -6,6 +6,19 @@ An open-source cuda library for image processing
 - &emsp;***Author**: Haibo Wang*<br>
 - &emsp;***Email**: dasuda2015@163.com*
 - &emsp;***Home Page**: <a href=dasuda.top>dasuda.top</a>*
+
+## Performance Table
+
+Image Size: 480*640
+
+| Function | GPU/ms(NVIDIA GTX 1070 8G) | CPU/ms(single thread/OpenCV)|$\frac{T^cpu_min}{T^gpu_max}$-$\frac{T^cpu_max}{T^gpu_min}$|
+|:-:|:-:|:-:|
+|RGB2GRAY|0.008-0.010|0.340-0.360|3.4-45|
+|RGB2HSV|0.150-0.200|3.900-4.400|19.5-29.3|
+|thresholdBinarization|0.005-0.008|0.035-0.045|4.4-9.0|
+|sobel/scharr|-|0.032-0.038|-|
+|erode/dilate|-|0.045-0.049|-|
+|getHist(bin:256)|-|0.145-0.149|-|
 ## Function List
 
 ### Color space transformation
