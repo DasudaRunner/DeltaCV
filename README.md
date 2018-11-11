@@ -12,7 +12,7 @@ An open-source cuda library for image processing
 
 - **RGB2GRAY**`(uchar3* dataIn,unsigned char* dataOut,int imgRows,int imgCols)`: in `./cu/src/colorSpace.cu`. Converting RGB images to gray-scale images.
 
-- **RGB2HSV_V**`(uchar3* dataIn,uchar3* dataOut,int imgRows,int imgCols,short int minVal,short int maxVal)`: in `./cu/src/colorSpace.cu`. Converting RGB images to HSV images， and using threshold segmentation to RGB images based on V channel.
+- **RGB2HSV**`(uchar3* dataIn,uchar3* dataOut,int imgRows,int imgCols,uchar3 minVal,uchar3 maxVal)`: in `./cu/src/colorSpace.cu`. Converting RGB images to HSV images， and using threshold segmentation to RGB images based on minVal and maxVal.
 
 ### Binarization
 
