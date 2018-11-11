@@ -43,3 +43,4 @@ An open-source cuda library for image processing
 
 ### Histogram
 
+- **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `./cu/src/getHist.cu`. **Unfinished**
