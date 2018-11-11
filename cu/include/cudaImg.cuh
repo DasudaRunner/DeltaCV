@@ -19,12 +19,12 @@ extern "C"{
                       dim3 tPerBlock,
                       dim3 bPerGrid);
 
-    void RGB2HSV_V_gpu(uchar3* dataIn,
+    void RGB2HSV_gpu(uchar3* dataIn,
                      uchar3* dataOut,
                      int imgRows,
                      int imgCols,
-                       short int minVal,
-                       short int maxVal,
+                     uchar3 minVal,
+                     uchar3 maxVal,
                      dim3 tPerBlock,
                      dim3 bPerGrid);
 

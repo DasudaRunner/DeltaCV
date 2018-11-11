@@ -88,19 +88,20 @@ int main() {
         //cap>>frame;
 
         cudaMemcpy(d_in,frame.data,IMAGE_ROWS*IMAGE_COLS * sizeof(uchar3),cudaMemcpyHostToDevice);
-
-//        RGB2HSV_V_gpu(d_in,hsvRange_gpu,IMAGE_ROWS,IMAGE_COLS,0,220,threadsPerBlock,blockPerGrid);
-
-//        cudaMemcpy(hsvRange_img.data,hsvRange_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(uchar3),cudaMemcpyDeviceToHost);
+//        myTimer.start();
+        uchar3 min_hsv={0,0,0},max_hsv={180,255,255};
+        RGB2HSV_gpu(d_in,hsvRange_gpu,IMAGE_ROWS,IMAGE_COLS,min_hsv,max_hsv,threadsPerBlock,blockPerGrid);
+//        cudaDeviceSynchronize();
+//        myTimer.print_ms_slideTimer("01");
+        cudaMemcpy(hsvRange_img.data,hsvRange_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(uchar3),cudaMemcpyDeviceToHost);
 
         RGB2GRAY_gpu(d_in,gray_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
         cudaMemcpy(gray.data,gray_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
 
-        myTimer.start();
-        thresholdBinarization_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,180,200,0,255,threadsPerBlock,blockPerGrid);
-        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
-        cudaDeviceSynchronize();
-        myTimer.print_ms_slideTimer("01");
+
+//        thresholdBinarization_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,180,200,0,255,threadsPerBlock,blockPerGrid);
+//        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
+
 //        getHist_gpu(gray_gpu,hist_gpu,threadsPerBlock,blockPerGrid);
 //        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
 
@@ -122,8 +123,8 @@ int main() {
 
 //        cv::imshow("frame",histImg);
         cv::imshow("gray",gray);
-//        cv::imshow("hsvRange",hsvRange_img);
-        cv::imshow("erode",erode_img);
+        cv::imshow("hsvRange",hsvRange_img);
+//        cv::imshow("erode",erode_img);
 
         if(cv::waitKey(2)>0)
         {

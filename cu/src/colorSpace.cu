@@ -36,22 +36,24 @@ void RGB2GRAY_gpu(uchar3* dataIn,
 }
 
 /*
- * 在原图上（RGB空间）直接利用HSV的V通道进行约束
+ * 在原图上（RGB空间）直接利用HSV的各通道进行约束
  */
 
-__global__ void RGB2HSV_V(uchar3* dataIn,
-                        uchar3* dataOut,
-                         int imgRows,
-                         int imgCols,
-                          short int minVal,
-                          short int maxVal)
+__global__ void RGB2HSV(uchar3* dataIn,
+                          uchar3* dataOut,
+                          int imgRows,
+                          int imgCols,
+                        uchar3 minVal,
+                        uchar3 maxVal)
 {
     int xIndex = threadIdx.x + __umul24(blockIdx.x, blockDim.x);
     int yIndex = threadIdx.y + __umul24(blockIdx.y, blockDim.y);
 
     int tid = yIndex*imgCols+xIndex;
 
-    char maxPixel;
+    float maxPixel,minPixel;
+    unsigned char sign0,sign1;
+    float _h=0.0f,_s=0.0f;
     uchar3 zeroPixel;
     zeroPixel.x=0;
     zeroPixel.y=0;
@@ -61,29 +63,51 @@ __global__ void RGB2HSV_V(uchar3* dataIn,
     {
         uchar3 rgb = dataIn[tid];
 
-        maxPixel = rgb.y;
+        unsigned char r = rgb.z;
+        unsigned char g = rgb.y;
+        unsigned char b = rgb.x;
 
-        if(rgb.z > rgb.y)
+        sign0 = max(r,g);
+        maxPixel = max(sign0,b);
+
+        sign1 = min(r,g);
+        minPixel = min(sign1,b);
+
+        float div = maxPixel-minPixel;
+
+        if(maxPixel!=0)
         {
-            maxPixel = rgb.z;
+            _s = (div*255.0f)/maxPixel;
         }
 
-        if(rgb.x > maxPixel)
+        _h = (maxPixel==r)*((60*(g-b))/div+360)+
+                (maxPixel==g)*((60*(b-r))/div+120)+
+                (maxPixel==b)*((60*(r-g))/div+240);
+
+        _h = (_h<0)*(_h + 360);
+
+        _h /= 2.0f;
+
+        if(_h >= minVal.x && _h <= maxVal.x &&
+           _s >= minVal.y && _s <= maxVal.y &&
+           minPixel >= minVal.z && minPixel <= maxVal.z)
         {
-            maxPixel = rgb.x;
+            dataOut[tid] = rgb;
+        }else
+        {
+            dataOut[tid] = zeroPixel;
         }
-        dataOut[tid] = (maxPixel<minVal || maxPixel>maxVal) ? zeroPixel:rgb;
     }
 }
 
-void RGB2HSV_V_gpu(uchar3* dataIn,
+void RGB2HSV_gpu(uchar3* dataIn,
                  uchar3* dataOut,
-                  int imgRows,
-                  int imgCols,
-                  short int minVal,
-                  short int maxVal,
-                  dim3 tPerBlock,
-                  dim3 bPerGrid)
+                 int imgRows,
+                 int imgCols,
+                 uchar3 minVal,
+                 uchar3 maxVal,
+                   dim3 tPerBlock,
+                   dim3 bPerGrid)
 {
-    RGB2HSV_V<<<bPerGrid,tPerBlock>>>(dataIn,dataOut,imgRows,imgCols,minVal,maxVal);
+    RGB2HSV<<<bPerGrid,tPerBlock>>>(dataIn,dataOut,imgRows,imgCols,minVal,maxVal);
 }
