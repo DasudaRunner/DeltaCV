@@ -29,7 +29,6 @@ An open-source cuda library for image processing
  *      thresholdMin = 0 and valMax = 0  ==> THRESH_TOZERO_INV
  */
 ```
-- 
 
 ### Edge Detection
 
