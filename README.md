@@ -7,7 +7,24 @@ An open-source high performance library for image processing. Welcome to the new
 - &emsp;***Email**: dasuda2015@163.com*
 - &emsp;***Home Page**: [dasuda.top](https://dasuda.top)
 
-## Performance Table
+---
+## Multiprocess
+
+### Inrepduction
+- examples/nodeCamera: Process for reading images from camera. Save images to share memory.
+- examples/nodeProcess: Process for image processing. Read images from share memory.
+
+### Usage
+```bash
+examples/nodeCamera/bin$: ./nodeCamera
+examples/nodeProcess/bin$: ./nodeProcess
+```
+For more details， nodeCamera.hpp
+
+---
+## CUDA
+
+### Performance Table
 
 Image Size: 480 x 640（H x W）
 
@@ -20,15 +37,15 @@ Image Size: 480 x 640（H x W）
 |erode / dilate (3*3 rect)|-|0.045 - 0.049|-|
 |getHist (bin:256)|-|0.145 - 0.149|-|
 
-## Function List
+### Function List
 
-### Color space transformation
+#### Color space transformation
 
 - **RGB2GRAY**`(uchar3* dataIn,unsigned char* dataOut,int imgRows,int imgCols)`: in `./cu/src/colorSpace.cu`. Converting RGB images to gray-scale images.
 
 - **RGB2HSV**`(uchar3* dataIn,uchar3* dataOut,int imgRows,int imgCols,uchar3 minVal,uchar3 maxVal)`: in `./cu/src/colorSpace.cu`. Converting RGB images to HSV images， and using threshold segmentation to RGB images based on minVal and maxVal.
 
-### Binarization
+#### Binarization
 
 - **thresholdBinarization**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,unsigned char thresholdMin,unsigned char thresholdMax,unsigned char valMin,unsigned char valMax)`: in `./cu/src/binarization.cu`. Similar to OpenCV, I designed 4 modes: `THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH_TOZERO_INV`.
 
@@ -44,18 +61,18 @@ Image Size: 480 x 640（H x W）
  */
 ```
 
-### Edge Detection
+#### Edge Detection
 
 - **sobel**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `./cu/src/edgeDetection.cu`. Edge detection using sobel operator.
 
 - **scharr**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `./cu/src/edgeDetection.cu`. Edge detection using scharr operator.
 
-### Erode and dilate
+#### Erode and dilate
 
 - **erode**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int erodeElementRows,short int erodeElementCols)`: in `./cu/src/erode_dilate.cu`. 
 
 - **dilate**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int dilateElementRows,short int dilateElementCols)`: in `./cu/src/erode_dilate.cu`. 
 
-### Histogram
+#### Histogram
 
 - **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `./cu/src/getHist.cu`. (**Unfinished**)
