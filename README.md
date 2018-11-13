@@ -1,4 +1,4 @@
-# CUDA-CV
+# DeltaCV
 An open-source cuda library for image processing
 
 &nbsp;[![author Haibo](https://img.shields.io/badge/author-Haibo%20Wong-blue.svg?style=flat)](https://github.com/DasudaRunner/Object-Tracking)&nbsp;&nbsp;&nbsp;&nbsp;
