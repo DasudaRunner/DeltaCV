@@ -10,6 +10,11 @@ An open-source high performance library for image processing. Welcome to the new
 ---
 ## Multiprocess
 
+### Dependencies
+
+- Boost
+- OpenCV
+
 ### Inrepduction
 - examples/nodeCamera: Process for reading images from camera. Save images to share memory.
 - examples/nodeProcess: Process for image processing. Read images from share memory.
@@ -23,6 +28,11 @@ For more details， see nodeCamera.hpp
 
 ---
 ## CUDA
+
+### Dependencies
+
+- CUDA
+- OpenCV
 
 ### Performance Table
 
