@@ -9,7 +9,7 @@ An open-source high performance library for image processing. Welcome to the new
 
 ## Performance Table
 
-Image Size: 480*640（h*w）
+Image Size: 480 x 640（H x W）
 
 | Function | GPU/ms (NVIDIA GTX 1070 8G) | CPU/ms (OpenCV) | Speed-up |
 |:-:|:-:|:-:|:-:|
