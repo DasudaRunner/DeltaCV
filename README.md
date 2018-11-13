@@ -5,7 +5,7 @@ An open-source high performance library for image processing. Welcome to the new
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)<br>
 - &emsp;***Author**: Haibo Wang*<br>
 - &emsp;***Email**: dasuda2015@163.com*
-- &emsp;***Home Page**: [dasuda.top](https://dasuda.top)
+- &emsp;***Home Page**: [dasuda.top](https://dasuda.top)*
 
 ---
 ## Multiprocess
@@ -19,7 +19,7 @@ An open-source high performance library for image processing. Welcome to the new
 examples/nodeCamera/bin$: ./nodeCamera
 examples/nodeProcess/bin$: ./nodeProcess
 ```
-For more details， nodeCamera.hpp
+For more details， see nodeCamera.hpp
 
 ---
 ## CUDA
