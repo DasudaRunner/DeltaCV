@@ -12,8 +12,13 @@ __global__ void getHist(unsigned char* dataIn, unsigned int* hist)
     int xdx = threadIdx.x + __umul24(blockIdx.x, blockDim.x);
     int ydx = threadIdx.y + __umul24(blockIdx.y, blockDim.y);
 
-    int tid = xdx + ydx*gridDim.x*blockDim.x; //全局ID
+    int tid = xdx + ydx*gridDim.x*blockDim.x;
 
+    if(tid < 256)
+    {
+        hist[tid]=0;
+    }
+    __syncthreads();
     atomicAdd(&hist[dataIn[tid]],1);
 
 }

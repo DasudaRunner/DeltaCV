@@ -32,6 +32,7 @@ bool getGPUConfig()
                 cout<<"major: "<<prop.major<<endl;
             }
         }
+        cudaSetDevice(count);
         cout<<"--------------------------------"<<endl;
         return true;
     }else {

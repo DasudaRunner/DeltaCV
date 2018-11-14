@@ -77,6 +77,17 @@ extern "C"{
                                    unsigned char valMax,
                                    dim3 tPerBlock,
                                    dim3 bPerGrid);
+
+    void ostu_gpu(unsigned char* dataIn,
+                  unsigned char* dataOut,
+                  unsigned int* hist,
+                  float* sum_Pi,
+                  float* sum_i_Pi,
+                  float* u_0,
+                  float* varance,
+                  int* thres,
+                  short int imgRows,
+                  short int imgCols);
 };
 
 #endif //CUDAIMG_CUH

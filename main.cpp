@@ -26,25 +26,6 @@ using namespace std;
 
 int main() {
 
-    ///////////////////////////////////////////////////////////
-
-//    bool res = boost::interprocess::shared_memory_object::remove("shm"); //首先检查内存是否被释放
-//
-//    cout<<"remove shm "<<res<<endl;
-//
-//    //托管共享内存
-//    boost::interprocess::managed_shared_memory managed_shm(boost::interprocess::open_or_create,"shm",2457601);
-//
-//    int* shm_image = managed_shm.find_or_construct<int>("integer")[480][640](100);
-//
-//    boost::interprocess::named_mutex named_mtx(boost::interprocess::open_or_create, "mtx");
-
-    ///////////////////////////////////////////////////////////
-
-//    cv::Mat image = cv::imread("/home/dasuda/david/testcmake/imgs/lena.jpg");
-
-//    cout<<image.size<<endl;
-
     if(!getGPUConfig())
     {
         return 0;
@@ -57,16 +38,26 @@ int main() {
     cv::Mat hsvRange_img(IMAGE_ROWS,IMAGE_COLS,CV_8UC3,cv::Scalar(0));
     cv::Mat histImg;
 
-    int hist_cpu[256];
+    unsigned int hist_cpu[256];
     memset(hist_cpu,0,256* sizeof(int));
 
     uchar3* d_in;
     unsigned char* gray_gpu;
     uchar3* hsvRange_gpu;
+    unsigned char* erode_img_gpu;
 
     unsigned int* hist_gpu;
+    float* host_sum_Pi;
+    float* host_sum_i_Pi;
+    float* host_u_0;
+    float* host_varance;
+    int* host_thres;
 
-    unsigned char* erode_img_gpu;
+    cudaMalloc((void**)&host_sum_Pi,256* sizeof(float));
+    cudaMalloc((void**)&host_sum_i_Pi,256* sizeof(float));
+    cudaMalloc((void**)&host_u_0, sizeof(float));
+    cudaMalloc((void**)&host_varance,256* sizeof(float));
+    cudaMalloc((void**)&host_thres,sizeof(int));
 
     cudaMalloc((void**)&d_in,IMAGE_ROWS*IMAGE_COLS* sizeof(uchar3));
     cudaMalloc((void**)&gray_gpu,IMAGE_ROWS*IMAGE_COLS* sizeof(unsigned char));
@@ -82,33 +73,54 @@ int main() {
     cv::VideoCapture cap(0);
 
     cv::Mat frame = cv::imread("/home/dasuda/david/cudaCV/imgs/usb_camera.jpg");
-
+    cv::Mat bina_test;
     while(true)
     {
         //cap>>frame;
 
         cudaMemcpy(d_in,frame.data,IMAGE_ROWS*IMAGE_COLS * sizeof(uchar3),cudaMemcpyHostToDevice);
+
+//        uchar3 min_hsv={0,0,0},max_hsv={180,255,255};
+//        RGB2HSV_gpu(d_in,hsvRange_gpu,IMAGE_ROWS,IMAGE_COLS,min_hsv,max_hsv,threadsPerBlock,blockPerGrid);
+//        cudaMemcpy(hsvRange_img.data,hsvRange_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(uchar3),cudaMemcpyDeviceToHost);
+
 //        myTimer.start();
-        uchar3 min_hsv={0,0,0},max_hsv={180,255,255};
-        RGB2HSV_gpu(d_in,hsvRange_gpu,IMAGE_ROWS,IMAGE_COLS,min_hsv,max_hsv,threadsPerBlock,blockPerGrid);
+        RGB2GRAY_gpu(d_in,gray_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
 //        cudaDeviceSynchronize();
 //        myTimer.print_ms_slideTimer("01");
-        cudaMemcpy(hsvRange_img.data,hsvRange_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(uchar3),cudaMemcpyDeviceToHost);
-
-        RGB2GRAY_gpu(d_in,gray_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
         cudaMemcpy(gray.data,gray_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
-
 
 //        thresholdBinarization_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,180,200,0,255,threadsPerBlock,blockPerGrid);
 //        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
 
+//        sobel_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
+//        erode_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,cv::Size(3,3),threadsPerBlock,blockPerGrid);
+
 //        getHist_gpu(gray_gpu,hist_gpu,threadsPerBlock,blockPerGrid);
 //        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
+//        showHistImage(histImg,hist_cpu,256);
+        myTimer.start();
+        ostu_gpu(gray_gpu,erode_img_gpu,hist_gpu,host_sum_Pi,host_sum_i_Pi,host_u_0,host_varance,host_thres,IMAGE_ROWS,IMAGE_COLS);
+        cudaDeviceSynchronize();
+        myTimer.print_ms_slideTimer("01",1);
+        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
+//        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
+//        showHistImage(histImg,hist_cpu,256);
 
-//        sobel_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
 //        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
 
-//        cout<<"time: "<<(double)(clock()-start)/CLOCKS_PER_SEC*1000.0<<" ms"<<endl;
+//        myTimer.start();
+//        cv::threshold(gray,bina_test,180,255,cv::THRESH_BINARY);
+//        cv::threshold(gray,bina_test,180,255,cv::THRESH_BINARY);
+//        cv::threshold(gray,bina_test,180,255,cv::THRESH_BINARY);
+//        cv::threshold(gray,bina_test,180,255,cv::THRESH_BINARY);
+//        cv::threshold(gray,bina_test,180,255,cv::THRESH_BINARY);
+//
+//        myTimer.print_ms_slideTimer("01");
+
+//        thresholdBinarization_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,180,200,0,255,threadsPerBlock,blockPerGrid);
+//        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
+
 //        showHistImage(histImg,hist_cpu,256);
 
 //        cv::cvtColor(frame,gray,cv::COLOR_RGB2GRAY);
@@ -121,12 +133,16 @@ int main() {
 //        }
 //        named_mtx.unlock();
 
+
+        cv::threshold(gray, bina_test, 0, 255, CV_THRESH_OTSU);
+
 //        cv::imshow("frame",histImg);
         cv::imshow("gray",gray);
-        cv::imshow("hsvRange",hsvRange_img);
-//        cv::imshow("erode",erode_img);
+//        cv::imshow("hsvRange",hsvRange_img);
+        cv::imshow("erode",erode_img);
+        cv::imshow("opencv_threshold",bina_test);
 
-        if(cv::waitKey(2)>0)
+        if(cv::waitKey(3)>0)
         {
 //            cv::imwrite("/home/dasuda/david/cudaCV/imgs/usb_camera.jpg",frame);
 //            boost::interprocess::named_mutex::remove("mtx");
