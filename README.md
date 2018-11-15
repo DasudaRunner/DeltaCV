@@ -44,9 +44,9 @@ Image Size: 480 x 640（H x W）
 |RGB2HSV|0.150 - 0.200|3.900 - 4.400|19.5 - 29.3|
 |thresholdBinarization|0.005 - 0.008|0.035 - 0.045|4.4 - 9.0|
 |ostu|0.16-0.17|1.280-1.432|8.0-8.9|
-|sobel / scharr|-|0.032 - 0.038|-|
-|erode / dilate (3*3 rect)|-|0.045 - 0.049|-|
-|getHist (bin:256)|-|0.145 - 0.149|-|
+|sobel / scharr|0.032 - 0.038|-|-|
+|erode / dilate (3*3 rect)|0.045 - 0.049|-|-|
+|getHist (bin:256)|0.145 - 0.149|-|-|
 
 ### Function List
 
