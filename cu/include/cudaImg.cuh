@@ -88,6 +88,14 @@ extern "C"{
                   int* thres,
                   short int imgRows,
                   short int imgCols);
+
+    //***************blur***************
+    void guassianBlur3_gpu(unsigned char* dataIn,
+                          unsigned char* dataOut,
+                          short int imgRows,
+                          short int imgCols,
+                          dim3 tPerBlock,
+                          dim3 bPerGrid);
 };
 
 #endif //CUDAIMG_CUH

@@ -12,8 +12,6 @@ __global__ void sobel(unsigned char* dataIn,
     int xdx = threadIdx.x + __umul24(blockIdx.x, blockDim.x);
     int ydx = threadIdx.y + __umul24(blockIdx.y, blockDim.y);
 
-    int tid = xdx + ydx*gridDim.x*blockDim.x;
-
     short int Gx=0;
     short int Gy=0;
 
@@ -31,7 +29,7 @@ __global__ void sobel(unsigned char* dataIn,
         if(Gy<0)
             Gy = -Gy;
 
-        dataOut[tid] = (Gx+Gx)/2;
+        dataOut[xdx + ydx*imgCols] = (Gx+Gx)/2;
 
 //        if ((Gx+Gx)/2 > 100)
 //        {
@@ -51,8 +49,6 @@ __global__ void scharr(unsigned char* dataIn,
     int xdx = threadIdx.x + __umul24(blockIdx.x, blockDim.x);
     int ydx = threadIdx.y + __umul24(blockIdx.y, blockDim.y);
 
-    int tid = xdx + ydx*gridDim.x*blockDim.x;
-
     short int Gx=0;
     short int Gy=0;
 
@@ -70,7 +66,7 @@ __global__ void scharr(unsigned char* dataIn,
         if(Gy<0)
             Gy = -Gy;
 
-        dataOut[tid] = (Gx+Gx)/2;
+        dataOut[xdx + ydx*imgCols] = (Gx+Gx)/2;
 
 //        if ((Gx+Gx)/2 > 100)
 //        {
