@@ -17,6 +17,7 @@ All samples are in `examples/`.
 - [x] **edgeDetection**
 - [x] **erode_dilate**
 - [ ] **getHist**
+- [x] **blur**
 
 - [x] **nodeCamera**: Save images to shared memory.
 - [x] **nodeProcess**: Read images from shared memory.
@@ -60,6 +61,7 @@ Image Size: 480 x 640（H x W）
 |sobel / scharr|0.032 - 0.038|-|-|
 |erode / dilate (3*3 rect)|0.045 - 0.049|-|-|
 |getHist (bin:256)|0.145 - 0.149|-|-|
+|blur(3*3 guassian kernel)|0.036-0.040|-|-|
 
 ### Function List
 
@@ -93,7 +95,7 @@ Image Size: 480 x 640（H x W）
 
 - **scharr**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `./cu/src/edgeDetection.cu`. Edge detection using scharr operator.
 
-#### Erode and dilate
+#### Erode and Dilate
 
 - **erode**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int erodeElementRows,short int erodeElementCols)`: in `./cu/src/erode_dilate.cu`. 
 
@@ -102,3 +104,7 @@ Image Size: 480 x 640（H x W）
 #### Histogram
 
 - **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `./cu/src/getHist.cu`. (**Unfinished**)
+
+#### Guassian Blur
+
+- **guassianBlur3_gpu**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,dim3 tPerBlock,dim3 bPerGrid)`: in `./cu/src/blur.cu`. Guassian blur with 3\*3 kernel
