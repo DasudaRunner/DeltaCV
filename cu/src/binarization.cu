@@ -116,7 +116,8 @@ __global__ void ostu(unsigned int* hist,
                      short int imgRows,
                      short int imgCols)
 {
-//
+
+    //清空相关数组，清空上一次的计算结果
     if(blockIdx.x == 0)
     {
         sum_Pi[threadIdx.x] = 0.0f;
@@ -128,38 +129,37 @@ __global__ void ostu(unsigned int* hist,
     }
     __syncthreads();
 
-    int tid = threadIdx.x;
-    int bid_1 = blockIdx.x-1;
-    unsigned int current_val = hist[tid];
+    //计算整幅图的平均灰度、前景的概率、前景的平均灰度值
+    unsigned int current_val = hist[threadIdx.x];
     if(blockIdx.x==0)
     {
-        atomicAdd(&u_0[0],current_val*tid);//sum(i*Pi)+sum(j*Pj)
+        atomicAdd(&u_0[0],current_val*threadIdx.x);//sum(i*Pi)+sum(j*Pj)
     }
     else
     {
-        if(tid < blockIdx.x)
+        if(threadIdx.x < blockIdx.x)
         {
-            atomicAdd(&sum_Pi[bid_1],current_val);//sum()
-            atomicAdd(&sum_i_Pi[bid_1],current_val*tid);//sum(i*Pi)
+            atomicAdd(&sum_Pi[blockIdx.x-1],current_val);//sum()
+            atomicAdd(&sum_i_Pi[blockIdx.x-1],current_val*threadIdx.x);//sum(i*Pi)
         }
     }
     __syncthreads();
     //now we get sum_Pi[256] and sum_i_Pi[256] and w_0
+    //下面开始计算类间方差
     int imgSize = imgRows*imgCols;
     if(blockIdx.x>0)
     {
-        float f_sum_pi = sum_Pi[bid_1]/imgSize;
+        float f_sum_pi = sum_Pi[blockIdx.x-1]/imgSize;
         float f_sum_pj = 1-f_sum_pi;
         if(f_sum_pj==0)
         {
-            varance[bid_1]=0;
+            varance[blockIdx.x-1]=0;
         }else
         {
-            float temp = (u_0[0]/imgSize-sum_i_Pi[bid_1]/(f_sum_pi*imgSize));
-            varance[bid_1] = temp*temp*f_sum_pi/f_sum_pj;
+            float temp = (u_0[0]/imgSize-sum_i_Pi[blockIdx.x-1]/(f_sum_pi*imgSize));
+            varance[blockIdx.x-1] = temp*temp*f_sum_pi/f_sum_pj;
         }
     }
-    __syncthreads();
 }
 
 /*

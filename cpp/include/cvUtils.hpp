@@ -31,6 +31,7 @@ class clocker {
         static const int slideLength = 500;
         double slideTimer[slideLength];
         int idSlide=0;
+        int epoch=0;
 
     public:
         clocker()
@@ -64,25 +65,26 @@ class clocker {
             return ((double)((clock()-last_time)*1000000.0)/CLOCKS_PER_SEC);
         }
 
-
         void print_ms_slideTimer(string ID,int div)
         {
 
             slideTimer[idSlide] = ((double)((clock()-last_time)*1000.0)/CLOCKS_PER_SEC);
-
-            idSlide++;
-
-            if(idSlide>=slideLength)
-            {
-                idSlide=0;
-            }
 
             double sum_time = 0.0;
             for (int i = 0; i < slideLength; ++i) {
                 sum_time += slideTimer[i];
             }
 
-            cout<<"SlideTimer ["<<ID<<"]["<<idSlide<<"]: "<<sum_time/slideLength/div<<"ms"<<endl;
+            float print_time = sum_time/slideLength/div;
+
+            idSlide++;
+
+            if(idSlide>=slideLength)
+            {
+                idSlide=0;
+                epoch++;
+                cout<<"SlideTimer ["<<ID<<"]["<<epoch<<"]: "<<print_time<<"ms"<<endl;
+            }
         }
 };
 

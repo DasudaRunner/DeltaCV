@@ -99,10 +99,12 @@ int main() {
 //        getHist_gpu(gray_gpu,hist_gpu,threadsPerBlock,blockPerGrid);
 //        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
 //        showHistImage(histImg,hist_cpu,256);
+        cudaDeviceSynchronize();
         myTimer.start();
         ostu_gpu(gray_gpu,erode_img_gpu,hist_gpu,host_sum_Pi,host_sum_i_Pi,host_u_0,host_varance,host_thres,IMAGE_ROWS,IMAGE_COLS);
         cudaDeviceSynchronize();
         myTimer.print_ms_slideTimer("01",1);
+
         cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
 //        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
 //        showHistImage(histImg,hist_cpu,256);
@@ -133,9 +135,9 @@ int main() {
 //        }
 //        named_mtx.unlock();
 
-
+//        myTimer.start();
         cv::threshold(gray, bina_test, 0, 255, CV_THRESH_OTSU);
-
+//        myTimer.print_ms_slideTimer("01",5);
 //        cv::imshow("frame",histImg);
         cv::imshow("gray",gray);
 //        cv::imshow("hsvRange",hsvRange_img);

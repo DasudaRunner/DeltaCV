@@ -31,7 +31,7 @@ int main()
     cout<<"remove shm "<<res<<endl;
 
     //托管共享内存
-    boost::interprocess::managed_shared_memory managed_shm(boost::interprocess::open_or_create,SHARE_MEMORY_NAME,2457601);
+    boost::interprocess::managed_shared_memory managed_shm(boost::interprocess::open_or_create,SHARE_MEMORY_NAME,1230000);//1228800
 
     int* shm_image = managed_shm.find_or_construct<int>("integer")[IMAGE_HEIGHT][IMAGE_WIDTH](0);
 

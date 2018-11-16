@@ -21,15 +21,15 @@ bool getGPUConfig()
             cout<<"-------------GPU["<<j<<"]-------------"<<endl;
             cudaDeviceProp prop;
             if(cudaGetDeviceProperties(&prop,j)==cudaSuccess){
-                cout<<"name: "<<prop.name<<endl;
-                cout<<"maxThreadsPerBlock: "<<prop.maxThreadsPerBlock<<endl;
-                cout<<"warp size: "<<prop.warpSize<<endl;
-                cout<<"totalGlobalMem: "<<prop.totalGlobalMem<<endl;
-                cout<<"clockRate: "<<prop.memPitch<<endl;
-                cout<<"multiProcessorCount: "<<prop.multiProcessorCount<<endl;
-                cout<<"maxThreadsPerMultiProcessor: "<<prop.maxThreadsPerMultiProcessor<<" 个"<<endl;
-                cout<<"sharedMemPerMultiprocessor: "<<prop.sharedMemPerMultiprocessor/1024 <<" KB"<<endl;
-                cout<<"major: "<<prop.major<<endl;
+                cout<<"Name: "<<prop.name<<endl;
+                cout<<"MaxThreadsPerBlock: "<<prop.maxThreadsPerBlock<<endl;
+                cout<<"Warp size: "<<prop.warpSize<<endl;
+                cout<<"TotalGlobalMem: "<<prop.totalGlobalMem<<endl;
+                cout<<"ClockRate: "<<prop.memPitch<<endl;
+                cout<<"MultiProcessorCount: "<<prop.multiProcessorCount<<endl;
+                cout<<"MaxThreadsPerMultiProcessor: "<<prop.maxThreadsPerMultiProcessor<<" 个"<<endl;
+                cout<<"SharedMemPerMultiprocessor: "<<prop.sharedMemPerMultiprocessor/1024 <<" KB"<<endl;
+                cout<<"Compute capability: "<<prop.major<<"."<<prop.minor<<endl;
             }
         }
         cudaSetDevice(count);
