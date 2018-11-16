@@ -8,7 +8,20 @@ An open-source high performance library for image processing. Welcome to the new
 - &emsp;***Home Page**: [dasuda.top](https://dasuda.top)*
 
 ---
-## Multiprocess
+## 1. Samples
+
+All samples are in `examples/`. 
+
+- [x] **binarization**
+- [x] **colorSpace**
+- [x] **edgeDetection**
+- [x] **erode_dilate**
+- [ ] **getHist**
+
+- [x] **nodeCamera**: Save images to shared memory.
+- [x] **nodeProcess**: Read images from shared memory.
+
+## 2. Multiprocess
 
 ### Dependencies
 
@@ -27,7 +40,7 @@ examples/nodeProcess/bin$: ./nodeProcess
 For more details， see nodeCamera.hpp
 
 ---
-## CUDA
+## 3. CUDA
 
 ### Dependencies
 
