@@ -16,7 +16,8 @@ All samples are in `examples/`.
 - [x] **colorSpace**
 - [x] **edgeDetection**
 - [x] **erode_dilate**
-- [ ] **getHist**
+- [x] **getHist**
+- [x] **equalizeHist**
 - [x] **blur**
 
 - [x] **nodeCamera**: Save images to shared memory.
@@ -61,6 +62,7 @@ Image Size: 480 x 640（H x W）
 |sobel / scharr|0.032 - 0.038|-|-|
 |erode / dilate (3*3 rect)|0.045 - 0.049|-|-|
 |getHist (bin:256)|0.145 - 0.149|-|-|
+|equalizeHist(bin:256)|0.16-0.17|0.31-0.32|1.8-2.0|
 |blur(3*3 guassian kernel)|0.036-0.040|-|-|
 
 ### Function List
@@ -103,7 +105,8 @@ Image Size: 480 x 640（H x W）
 
 #### Histogram
 
-- **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `./cu/src/getHist.cu`. (**Unfinished**)
+- **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `./cu/src/getHist.cu`. 
+- **\[wrapper\]equalizeHist_gpu**`(unsigned char* dataIn,unsigned int* hist,unsigned int* sum_ni,unsigned char* dataOut,short int imgRows,short int imgCols,dim3 tPerBlock,dim3 bPerGrid)`： in `./cu/src/getHist.cu`.(**Unfinished**)
 
 #### Guassian Blur
 
