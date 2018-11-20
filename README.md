@@ -16,8 +16,8 @@ All samples are in `examples/`.
 - [x] **colorSpace**
 - [x] **edgeDetection**
 - [x] **erode_dilate**
-- [x] **getHist**
-- [x] **equalizeHist**
+- [ ] **getHist**
+- [ ] **equalizeHist**
 - [x] **blur**
 
 - [x] **nodeCamera**: Save images to shared memory.
