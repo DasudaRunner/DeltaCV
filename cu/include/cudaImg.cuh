@@ -34,6 +34,15 @@ extern "C"{
                      dim3 tPerBlock,
                      dim3 bPerGrid);
 
+void equalizeHist_gpu(unsigned char* dataIn,
+                     unsigned int* hist,
+                     unsigned int* sum_ni,
+                     unsigned char* dataOut,
+                     short int imgRows,
+                     short int imgCols,
+                     dim3 tPerBlock,
+                     dim3 bPerGrid);
+
     //***************erode_dilate***************
     void erode_gpu(unsigned char* dataIn,
                    unsigned char* dataOut,

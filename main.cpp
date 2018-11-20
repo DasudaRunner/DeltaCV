@@ -37,9 +37,10 @@ int main() {
     cv::Mat erode_img(IMAGE_ROWS,IMAGE_COLS,CV_8UC1,cv::Scalar(0));
     cv::Mat hsvRange_img(IMAGE_ROWS,IMAGE_COLS,CV_8UC3,cv::Scalar(0));
     cv::Mat histImg;
+    cv::Mat histGray(IMAGE_ROWS,IMAGE_COLS,CV_8UC1,cv::Scalar(0));
 
     unsigned int hist_cpu[256];
-    memset(hist_cpu,0,256* sizeof(int));
+    memset(hist_cpu,0,256* sizeof(unsigned int));
 
     uchar3* d_in;
     unsigned char* gray_gpu;
@@ -47,17 +48,12 @@ int main() {
     unsigned char* erode_img_gpu;
 
     unsigned int* hist_gpu;
-    float* host_sum_Pi;
-    float* host_sum_i_Pi;
-    float* host_u_0;
-    float* host_varance;
-    int* host_thres;
 
-    cudaMalloc((void**)&host_sum_Pi,256* sizeof(float));
-    cudaMalloc((void**)&host_sum_i_Pi,256* sizeof(float));
-    cudaMalloc((void**)&host_u_0, sizeof(float));
-    cudaMalloc((void**)&host_varance,256* sizeof(float));
-    cudaMalloc((void**)&host_thres,sizeof(int));
+    unsigned int* sum_ni;
+    unsigned char* histGray_gpu;
+
+    cudaMalloc((void**)&sum_ni,256* sizeof(unsigned int));
+    cudaMalloc((void**)&histGray_gpu,IMAGE_ROWS*IMAGE_COLS*sizeof(unsigned char));
 
     cudaMalloc((void**)&d_in,IMAGE_ROWS*IMAGE_COLS* sizeof(uchar3));
     cudaMalloc((void**)&gray_gpu,IMAGE_ROWS*IMAGE_COLS* sizeof(unsigned char));
@@ -70,10 +66,12 @@ int main() {
     dim3 threadsPerBlock(32,32);
     dim3 blockPerGrid((IMAGE_COLS+threadsPerBlock.x-1)/threadsPerBlock.x,(IMAGE_ROWS+threadsPerBlock.y-1)/threadsPerBlock.y);
 
-    cv::VideoCapture cap(0);
+//    cv::VideoCapture cap0(0);
 
-    cv::Mat frame = cv::imread("/home/dasuda/david/cudaCV/imgs/usb_camera.jpg");
+    cv::Mat frame = cv::imread("/home/dasuda/david/cudaCV/imgs/img0.jpg");
     cv::Mat bina_test;
+
+    cv::Mat frame0,frame1;
     while(true)
     {
         //cap>>frame;
@@ -95,17 +93,24 @@ int main() {
 
 //        sobel_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
 //        erode_gpu(gray_gpu,erode_img_gpu,IMAGE_ROWS,IMAGE_COLS,cv::Size(3,3),threadsPerBlock,blockPerGrid);
-
+        cudaDeviceSynchronize();
+//        myTimer.start();
 //        getHist_gpu(gray_gpu,hist_gpu,threadsPerBlock,blockPerGrid);
 //        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
 //        showHistImage(histImg,hist_cpu,256);
+        equalizeHist_gpu(gray_gpu,hist_gpu,sum_ni,histGray_gpu,IMAGE_ROWS,IMAGE_COLS,threadsPerBlock,blockPerGrid);
         cudaDeviceSynchronize();
-        myTimer.start();
-        ostu_gpu(gray_gpu,erode_img_gpu,hist_gpu,host_sum_Pi,host_sum_i_Pi,host_u_0,host_varance,host_thres,IMAGE_ROWS,IMAGE_COLS);
-        cudaDeviceSynchronize();
-        myTimer.print_ms_slideTimer("01",1);
+//        myTimer.print_ms_slideTimer("01",1);
+//        cudaMemcpy(hist_cpu,sum_ni,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
+//        cout<<hist_cpu[0]<<endl;
+//        cout<<hist_cpu[1]<<endl;
+//        cout<<"----------"<<endl;
+//        showHistImage(histImg,hist_cpu,256);
+        cudaMemcpy(histGray.data,histGray_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
 
-        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
+//        ostu_gpu(gray_gpu,erode_img_gpu,hist_gpu,host_sum_Pi,host_sum_i_Pi,host_u_0,host_varance,host_thres,IMAGE_ROWS,IMAGE_COLS);
+
+//        cudaMemcpy(erode_img.data,erode_img_gpu,IMAGE_ROWS*IMAGE_COLS * sizeof(unsigned char),cudaMemcpyDeviceToHost);
 //        cudaMemcpy(hist_cpu,hist_gpu,256 * sizeof(unsigned int),cudaMemcpyDeviceToHost);
 //        showHistImage(histImg,hist_cpu,256);
 
@@ -135,18 +140,24 @@ int main() {
 //        }
 //        named_mtx.unlock();
 
-//        myTimer.start();
-        cv::threshold(gray, bina_test, 0, 255, CV_THRESH_OTSU);
-//        myTimer.print_ms_slideTimer("01",5);
-//        cv::imshow("frame",histImg);
-        cv::imshow("gray",gray);
-//        cv::imshow("hsvRange",hsvRange_img);
-        cv::imshow("erode",erode_img);
-        cv::imshow("opencv_threshold",bina_test);
+        myTimer.start();
+        cv::equalizeHist(gray, bina_test);
+        cv::equalizeHist(gray, bina_test);
+        cv::equalizeHist(gray, bina_test);
+        cv::equalizeHist(gray, bina_test);
+        cv::equalizeHist(gray, bina_test);
+        myTimer.print_ms_slideTimer("01",5);
 
+
+        cv::imshow("frame",histGray);
+        cv::imshow("bina_test",bina_test);
+//        cv::imshow("gray",gray);
+//        cv::imshow("hsvRange",hsvRange_img);
+//        cv::imshow("erode",erode_img);
+        
         if(cv::waitKey(3)>0)
         {
-//            cv::imwrite("/home/dasuda/david/cudaCV/imgs/usb_camera.jpg",frame);
+//            cv::imwrite("/home/dasuda/david/cudaCV/imgs/hist00.jpg",histImg);
 //            boost::interprocess::named_mutex::remove("mtx");
             cudaFree(d_in);
             cudaFree(gray_gpu);
