@@ -53,7 +53,7 @@ For more details， see nodeCamera.hpp
 
 Image Size: 480 x 640（H x W）
 
-| Function | GPU/ms (NVIDIA GTX 1070 8G) | CPU/ms (OpenCV) | Speed-up |
+| Function | GPU/ms (NVIDIA GTX 1070 8G) | CPU/ms (OpenCV on i5 7500) | Speed-up |
 |:-:|:-:|:-:|:-:|
 |RGB2GRAY|0.008 - 0.010|0.340 - 0.360|3.4 - 45|
 |RGB2HSV|0.150 - 0.200|3.900 - 4.400|19.5 - 29.3|
