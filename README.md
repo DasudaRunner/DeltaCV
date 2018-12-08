@@ -14,11 +14,11 @@ All samples are in `examples/`.
 
 - [x] **binarization**
 - [x] **colorSpace**
-- [x] **edgeDetection**
-- [x] **erode_dilate**
+- [ ] **edgeDetection**
+- [ ] **erode_dilate**
 - [ ] **getHist**
 - [ ] **equalizeHist**
-- [x] **blur**
+- [ ] **blur**
 
 - [x] **nodeCamera**: Save images to shared memory.
 - [x] **nodeProcess**: Read images from shared memory.
