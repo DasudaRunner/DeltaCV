@@ -3,6 +3,7 @@
 
 CMakeFiles/colorSpace.dir/colorSpace.cpp.o
  ../../../cpp/include/cudaUtils.hpp
+ ../../../cpp/include/deltaCV.hpp
  ../../../cu/include/cudaImg.cuh
  /home/dasuda/david/cudaCV/examples/colorSpace/colorSpace.cpp
  /usr/local/cuda/include/builtin_types.h

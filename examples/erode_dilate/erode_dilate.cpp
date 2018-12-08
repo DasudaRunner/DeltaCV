@@ -43,7 +43,7 @@ int main() {
     dim3 threadsPerBlock(32,32);
     dim3 blockPerGrid((IMAGE_COLS+threadsPerBlock.x-1)/threadsPerBlock.x,(IMAGE_ROWS+threadsPerBlock.y-1)/threadsPerBlock.y);
 
-    cv::Mat frame = cv::imread("/home/dasuda/david/cudaCV/imgs/usb_camera.jpg");
+    cv::Mat frame = cv::imread("***.jpg");
 
     while(true)
     {

@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/dasuda/david/cudaCV/examples/binarization/build
 CMakeFiles/binarization.dir/all:
 	$(MAKE) -f CMakeFiles/binarization.dir/build.make CMakeFiles/binarization.dir/depend
 	$(MAKE) -f CMakeFiles/binarization.dir/build.make CMakeFiles/binarization.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dasuda/david/cudaCV/examples/binarization/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target binarization"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dasuda/david/cudaCV/examples/binarization/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target binarization"
 .PHONY : CMakeFiles/binarization.dir/all
 
 # Include target in all.
@@ -76,7 +76,7 @@ all: CMakeFiles/binarization.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/binarization.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dasuda/david/cudaCV/examples/binarization/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dasuda/david/cudaCV/examples/binarization/build/CMakeFiles 9
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/binarization.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dasuda/david/cudaCV/examples/binarization/build/CMakeFiles 0
 .PHONY : CMakeFiles/binarization.dir/rule

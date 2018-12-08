@@ -10,6 +10,24 @@
 stdio.h
 -
 
+../../../cpp/include/deltaCV.hpp
+iostream
+-
+opencv2/core.hpp
+../../../cpp/include/opencv2/core.hpp
+opencv2/imgcodecs.hpp
+../../../cpp/include/opencv2/imgcodecs.hpp
+opencv2/highgui.hpp
+../../../cpp/include/opencv2/highgui.hpp
+opencv2/opencv.hpp
+-
+cuda_runtime.h
+-
+cudaImg.cuh
+../../../cpp/include/cudaImg.cuh
+cudaUtils.hpp
+../../../cpp/include/cudaUtils.hpp
+
 ../../../cu/include/cudaImg.cuh
 stdio.h
 -
@@ -55,6 +73,8 @@ time.h
 -
 algorithm
 -
+deltaCV.hpp
+/home/dasuda/david/cudaCV/examples/colorSpace/deltaCV.hpp
 
 /usr/local/cuda/include/builtin_types.h
 device_types.h
