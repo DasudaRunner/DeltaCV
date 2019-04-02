@@ -1,3 +1,0 @@
-/home/dasuda/david/cudaCV/examples/nodeCamera/build/CMakeFiles/rebuild_cache.dir
-/home/dasuda/david/cudaCV/examples/nodeCamera/build/CMakeFiles/edit_cache.dir
-/home/dasuda/david/cudaCV/examples/nodeCamera/build/CMakeFiles/nodeCamera.dir

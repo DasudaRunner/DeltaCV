@@ -14,7 +14,7 @@
 #include "cudaUtils.hpp"
 #include <time.h>
 #include <algorithm>
-#include "deltaCV.hpp"
+#include "cu_wrapper.hpp"
 
 using namespace std;
 
