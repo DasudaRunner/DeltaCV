@@ -23,23 +23,21 @@ All samples are in `examples/`.
 - [x] **nodeCamera**: Save images to shared memory.
 - [x] **nodeProcess**: Read images from shared memory.
 
-## 2. Multiprocess
+## 2. Shared Memory
 
 ### Dependencies
 
 - Boost
-- OpenCV
 
-### Inrepduction
-- examples/nodeCamera: Process for reading images from camera. Save images to share memory.
-- examples/nodeProcess: Process for image processing. Read images from share memory.
+### Location
 
-### Usage
-```bash
-examples/nodeCamera/bin$: ./nodeCamera
-examples/nodeProcess/bin$: ./nodeProcess
+`./cpp/include/shm.hpp`
+
+### Include
+```cpp
+#include "shm.hpp"
 ```
-For more details， see nodeCamera.hpp
+For more details， see [my blog](https://dasuda.top/deltacv/2019/04/02/DeltaCV%E4%B9%8B%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E7%AF%87/);
 
 ---
 ## 3. CUDA
