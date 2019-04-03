@@ -1,3 +1,0 @@
-/home/dasuda/david/cudaCV/examples/edgeDetection/build/CMakeFiles/rebuild_cache.dir
-/home/dasuda/david/cudaCV/examples/edgeDetection/build/CMakeFiles/edit_cache.dir
-/home/dasuda/david/cudaCV/examples/edgeDetection/build/CMakeFiles/edgeDetection.dir

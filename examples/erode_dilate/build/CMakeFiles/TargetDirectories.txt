@@ -1,3 +1,0 @@
-/home/dasuda/david/cudaCV/examples/erode_dilate/build/CMakeFiles/edit_cache.dir
-/home/dasuda/david/cudaCV/examples/erode_dilate/build/CMakeFiles/rebuild_cache.dir
-/home/dasuda/david/cudaCV/examples/erode_dilate/build/CMakeFiles/erode_dilate.dir

@@ -1,3 +1,0 @@
-/home/dasuda/david/cudaCV/examples/colorSpace/build/CMakeFiles/edit_cache.dir
-/home/dasuda/david/cudaCV/examples/colorSpace/build/CMakeFiles/rebuild_cache.dir
-/home/dasuda/david/cudaCV/examples/colorSpace/build/CMakeFiles/colorSpace.dir

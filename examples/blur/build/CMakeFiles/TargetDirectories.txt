@@ -1,3 +1,0 @@
-/home/dasuda/david/cudaCV/examples/blur/build/CMakeFiles/edit_cache.dir
-/home/dasuda/david/cudaCV/examples/blur/build/CMakeFiles/rebuild_cache.dir
-/home/dasuda/david/cudaCV/examples/blur/build/CMakeFiles/blur.dir

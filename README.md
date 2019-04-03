@@ -13,7 +13,7 @@ An open-source high performance library for image processing. including CPU opti
 All samples are in `examples/`. 
 
 - [x] **binarization**
-- [x] **colorSpace**
+- [ ] **colorSpace**
 - [ ] **edgeDetection**
 - [ ] **erode_dilate**
 - [ ] **getHist**
@@ -31,11 +31,11 @@ All samples are in `examples/`.
 
 ### Location
 
-`./cpp/include/shm.hpp`
+`cpu/include/deltaCV/cpu/shm.hpp`
 
 ### Include
 ```cpp
-#include "shm.hpp"
+#include "deltaCV/cpu/shm.hpp"
 ```
 For more details， see [my blog](https://dasuda.top/deltacv/2019/04/02/DeltaCV%E4%B9%8B%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E7%AF%87/);
 
@@ -67,13 +67,13 @@ Image Size: 480 x 640（H x W）
 
 #### Color space transformation
 
-- **RGB2GRAY**`(uchar3* dataIn,unsigned char* dataOut,int imgRows,int imgCols)`: in `./cu/src/colorSpace.cu`. Converting RGB images to gray-scale images.
+- **RGB2GRAY**`(uchar3* dataIn,unsigned char* dataOut,int imgRows,int imgCols)`: in `gpu/src/colorSpace.cu`. Converting RGB images to gray-scale images.
 
-- **RGB2HSV**`(uchar3* dataIn,uchar3* dataOut,int imgRows,int imgCols,uchar3 minVal,uchar3 maxVal)`: in `./cu/src/colorSpace.cu`. Converting RGB images to HSV images， and using threshold segmentation to RGB images based on minVal and maxVal.
+- **RGB2HSV**`(uchar3* dataIn,uchar3* dataOut,int imgRows,int imgCols,uchar3 minVal,uchar3 maxVal)`: in `gpu/src/colorSpace.cu`. Converting RGB images to HSV images， and using threshold segmentation to RGB images based on minVal and maxVal.
 
 #### Binarization
 
-- **thresholdBinarization**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,unsigned char thresholdMin,unsigned char thresholdMax,unsigned char valMin,unsigned char valMax)`: in `./cu/src/binarization.cu`. Similar to OpenCV function `threshold()`, I designed 5 modes: `THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH_TOZERO_INV`.
+- **thresholdBinarization**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,unsigned char thresholdMin,unsigned char thresholdMax,unsigned char valMin,unsigned char valMax)`: in `gpu/src/binarization.cu`. Similar to OpenCV function `threshold()`, I designed 5 modes: `THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH_TOZERO_INV`.
 
 ```cpp
 /*
@@ -87,25 +87,25 @@ Image Size: 480 x 640（H x W）
  */
 ```
 
-- **ostu_gpu**`(unsigned char* dataIn,unsigned char* dataOut,unsigned int* hist,float* sum_Pi,float* sum_i_Pi,float* u_0,float* varance,int* thres,short int imgRows,short int imgCols)`: in `./cu/src/binarization.cu`. Binarization using ostu.
+- **ostu_gpu**`(unsigned char* dataIn,unsigned char* dataOut,unsigned int* hist,float* sum_Pi,float* sum_i_Pi,float* u_0,float* varance,int* thres,short int imgRows,short int imgCols)`: in `gpu/src/binarization.cu`. Binarization using ostu.
 
 #### Edge Detection
 
-- **sobel**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `./cu/src/edgeDetection.cu`. Edge detection using sobel operator.
+- **sobel**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `gpu/src/edgeDetection.cu`. Edge detection using sobel operator.
 
-- **scharr**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `./cu/src/edgeDetection.cu`. Edge detection using scharr operator.
+- **scharr**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols)`: in `gpu/src/edgeDetection.cu`. Edge detection using scharr operator.
 
 #### Erode and Dilate
 
-- **erode**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int erodeElementRows,short int erodeElementCols)`: in `./cu/src/erode_dilate.cu`. 
+- **erode**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int erodeElementRows,short int erodeElementCols)`: in `gpu/src/erode_dilate.cu`. 
 
-- **dilate**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int dilateElementRows,short int dilateElementCols)`: in `./cu/src/erode_dilate.cu`. 
+- **dilate**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,short int dilateElementRows,short int dilateElementCols)`: in `gpu/src/erode_dilate.cu`. 
 
 #### Histogram
 
-- **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `./cu/src/getHist.cu`. 
-- **\[wrapper\]equalizeHist_gpu**`(unsigned char* dataIn,unsigned int* hist,unsigned int* sum_ni,unsigned char* dataOut,short int imgRows,short int imgCols,dim3 tPerBlock,dim3 bPerGrid)`： in `./cu/src/getHist.cu`.(**Unfinished**)
+- **getHist**`(unsigned char* dataIn, unsigned int* hist)`： in `gpu/src/getHist.cu`. 
+- **\[wrapper\]equalizeHist_gpu**`(unsigned char* dataIn,unsigned int* hist,unsigned int* sum_ni,unsigned char* dataOut,short int imgRows,short int imgCols,dim3 tPerBlock,dim3 bPerGrid)`： in `gpu/src/getHist.cu`.(**Unfinished**)
 
 #### Guassian Blur
 
-- **guassianBlur3_gpu**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,dim3 tPerBlock,dim3 bPerGrid)`: in `./cu/src/blur.cu`. Guassian blur with 3\*3 kernel
+- **guassianBlur3_gpu**`(unsigned char* dataIn,unsigned char* dataOut,short int imgRows,short int imgCols,dim3 tPerBlock,dim3 bPerGrid)`: in `gpu/src/blur.cu`. Guassian blur with 3\*3 kernel
