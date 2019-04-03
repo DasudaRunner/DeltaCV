@@ -20,8 +20,6 @@ All samples are in `examples/`.
 - [ ] **equalizeHist**
 - [ ] **blur**
 
-- [x] **nodeCamera**: Save images to shared memory.
-- [x] **nodeProcess**: Read images from shared memory.
 
 ## 2. Shared Memory
 
