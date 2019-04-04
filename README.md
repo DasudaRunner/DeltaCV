@@ -1,5 +1,7 @@
 # DeltaCV
-An open-source high performance library for image processing. including CPU optimization and GPU optimization. PRs are welcome.
+An open-source high performance library for image processing. including CPU optimization and GPU optimization. PRs are welcome. 
+
+For more details on DeltaCV ,please go to  https://dasuda.top/category/#/DeltaCV.
 
 &nbsp;[![author Haibo](https://img.shields.io/badge/author-Haibo%20Wong-blue.svg?style=flat)](https://github.com/DasudaRunner/Object-Tracking)&nbsp;&nbsp;&nbsp;&nbsp;
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)<br>
@@ -8,20 +10,7 @@ An open-source high performance library for image processing. including CPU opti
 - &emsp;***Home Page**: [dasuda.top](https://dasuda.top)*
 
 ---
-## 1. Samples
-
-All samples are in `examples/`. 
-
-- [x] **binarization**
-- [ ] **colorSpace**
-- [ ] **edgeDetection**
-- [ ] **erode_dilate**
-- [ ] **getHist**
-- [ ] **equalizeHist**
-- [ ] **blur**
-
-
-## 2. Shared Memory
+## 1. Shared Memory
 
 ### Dependencies
 
@@ -38,12 +27,47 @@ All samples are in `examples/`.
 For more details， see [my blog](https://dasuda.top/deltacv/2019/04/02/DeltaCV%E4%B9%8B%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E7%AF%87/);
 
 ---
+## 2. SIMD
+
+### Dependencies
+
+- OpenCV
+- SSE
+- AVX
+
+### Samples
+
+All samples are in `cpu/examples/`. 
+
+- [x] **inRange** 
+
+### Performance Table
+
+Image Size: 1024 x 1280（H x W）
+
+| Function | OpenCV/ms | DeltaCV/ms | Speed-up |
+|:-:|:-:|:-:|:-:|
+|inRange|1.06-1.18|0.29-0.30|3.5 - 4.0|
+
+---
 ## 3. CUDA
 
 ### Dependencies
 
 - CUDA
 - OpenCV
+- 
+### Samples
+
+All samples are in `gpu/examples/`. 
+
+- [x] **binarization**
+- [ ] **colorSpace**
+- [ ] **edgeDetection**
+- [ ] **erode_dilate**
+- [ ] **getHist**
+- [ ] **equalizeHist**
+- [ ] **blur**
 
 ### Performance Table
 
