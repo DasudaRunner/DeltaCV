@@ -56,7 +56,7 @@ Image Size: 1024 x 1280（H x W）
 
 - CUDA
 - OpenCV
-- 
+
 ### Samples
 
 All samples are in `gpu/examples/`. 
