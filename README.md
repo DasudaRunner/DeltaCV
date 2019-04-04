@@ -47,7 +47,7 @@ Image Size: 1024 x 1280（H x W）
 
 | Function | OpenCV/ms | DeltaCV/ms | Speed-up |
 |:-:|:-:|:-:|:-:|
-|inRange|1.06-1.18|0.29-0.30|3.5 - 4.0|
+|inRange|1.06 - 1.18|0.29 - 0.30|3.5 - 4.0|
 
 ---
 ## 3. CUDA
