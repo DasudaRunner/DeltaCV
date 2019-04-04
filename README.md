@@ -40,6 +40,7 @@ For more details， see [my blog](https://dasuda.top/deltacv/2019/04/02/DeltaCV%
 All samples are in `cpu/examples/`. 
 
 - [x] **inRange** 
+- [x] **ycrcbWithSeg**
 
 ### Performance Table
 
@@ -48,6 +49,7 @@ Image Size: 1024 x 1280（H x W）
 | Function | OpenCV/ms | DeltaCV/ms | Speed-up |
 |:-:|:-:|:-:|:-:|
 |inRange|1.06 - 1.18|0.29 - 0.30|3.5 - 4.0|
+|ycrcbWithSeg|6.68 - 6.75 |0.88 - 0.90|7.4 - 7.6|
 
 ---
 ## 3. CUDA

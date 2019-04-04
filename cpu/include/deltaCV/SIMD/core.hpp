@@ -21,17 +21,29 @@
 namespace deltaCV
 {
     using namespace std;
-    /**  @brief: more details - >
+    /**  @brief: more details - >　https://dasuda.top/deltacv/2019/04/02/DeltaCV%E4%B9%8BCPU%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96-inRange/
      *
-     * src: input
+     * src: input 3 channels or 1 channel
      * dst: output
      * width:
      * height:
      * lower: lower boundary
      * upper: upper boundary
      */
-    int inRange(unsigned char *src, unsigned char *dst, int width, int height,
-                     scalar lower, scalar upper);
+    void inRange(unsigned char *src, unsigned char *dst, int width, int height,
+                 scalar lower, scalar upper);
+
+    /**  @brief: more details - >　
+     *
+     * src: input(BGR image)
+     * dst: output
+     * width:
+     * height:
+     * lower: lower boundary
+     * upper: upper boundary
+     */
+    bool ycrcbWithSeg(unsigned char *src, unsigned char *dst,const int width,const int height,
+                      scalar lower,scalar upper);
 }
 
 

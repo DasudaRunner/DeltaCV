@@ -2,7 +2,7 @@
 
 namespace deltaCV
 {
-    int inRange(unsigned char *src, unsigned char *dst, int width, int height,
+    void inRange(unsigned char *src, unsigned char *dst, int width, int height,
                      scalar lower, scalar upper)
     {
         assert(lower.channels()==upper.channels());
