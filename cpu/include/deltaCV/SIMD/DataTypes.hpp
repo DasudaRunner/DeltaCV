@@ -47,6 +47,7 @@ namespace deltaCV
     }
 
     using scalar = _scalar<unsigned char>;
+    using scalar_d = _scalar<double>;
 }
 
 
