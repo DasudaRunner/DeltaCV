@@ -35,6 +35,14 @@ For more details， see [my blog](https://dasuda.top/deltacv/2019/04/02/DeltaCV%
 - SSE
 - AVX
 
+### Compile options
+
+You need put these compile options in your CMakeLists.txt.
+```shell
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=haswell")
+```
+
 ### Samples
 
 All samples are in `cpu/examples/`. 

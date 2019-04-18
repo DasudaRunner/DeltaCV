@@ -58,6 +58,25 @@ namespace deltaCV
      */
     void weightedGrayWithSeg(unsigned char *src, unsigned char *dst,const int width,const int height,scalar_d weights,
                              scalar lower,scalar upper);
+
+
+    /**  @brief: more details - >
+     *
+     * src: input(BGR image)
+     * dst1: output of grayscale
+     * dst2: output of bitwise_and
+     * width:
+     * height:
+     * gray_weights: deltaCV::scalar_d(0.144,0.587,0.299) for normal gray scale
+     * color_mode： 0-> red, 1-> blue
+     * thres1: grayscale threshold
+     * thres2: b/r-g threshold
+     */
+    void grayBRWithSeg(unsigned char *src, unsigned char *dst1,unsigned char *dst2,const int width,const int height,
+                       scalar_d gray_weights,
+                       const unsigned char color_mode,
+                       scalar thres1,scalar thres2);
+
 }
 
 
