@@ -31,7 +31,7 @@ For more details， see [my blog](https://dasuda.top/deltacv/2019/04/02/DeltaCV%
 
 ### Dependencies
 
-- OpenCV
+- OpenCV(This library dose not depend on OpenCV, but the input of the function is often type-cv::Mat)
 - SSE
 - AVX
 
