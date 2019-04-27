@@ -171,6 +171,96 @@ namespace deltaCV
                 *dst2 = 0;
             }
         }
+    }
+    void grayBRWithSegStandard(unsigned char *src, unsigned char *dst,const int width,const int height,
+                       const unsigned char color_mode,
+                       scalar thres)
+    {
+        assert(thres.channels()==1);
+        assert(color_mode==0 || color_mode==1);
+        int blockSize = 96; //16*3
+        int block = (height * width * 3) / blockSize;
 
+        // 加载阈值
+        __m256i thres256 = _mm256_setr_epi8(thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],
+                                         thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],
+                                         thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],
+                                         thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0],thres[0]);
+
+        for (int i = 0; i < block; ++i, src += blockSize, dst += 32)
+        {
+            __m128i src1, src2, src3,src4,src5,src6;
+
+            src1 = _mm_loadu_si128((__m128i *) (src + 0)); //一次性读取个字节
+            src2 = _mm_loadu_si128((__m128i *) (src + 16));
+            src3 = _mm_loadu_si128((__m128i *) (src + 32));
+            src4 = _mm_loadu_si128((__m128i *) (src + 48));
+            src5 = _mm_loadu_si128((__m128i *) (src + 64));
+            src6 = _mm_loadu_si128((__m128i *) (src + 80));
+
+
+            // 构造b/r-g的数据
+            __m128i B00 = _mm_shuffle_epi8(src1,_mm_setr_epi8(0,3,6,9,12,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+            B00 = _mm_or_si128(B00,_mm_shuffle_epi8(src2,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,2,5,8,11,14,-1,-1,-1,-1,-1)));
+            B00 = _mm_or_si128(B00,_mm_shuffle_epi8(src3,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,4,7,10,13)));
+
+            __m128i B01 = _mm_shuffle_epi8(src4,_mm_setr_epi8(0,3,6,9,12,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+            B01 = _mm_or_si128(B01,_mm_shuffle_epi8(src5,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,2,5,8,11,14,-1,-1,-1,-1,-1)));
+            B01 = _mm_or_si128(B01,_mm_shuffle_epi8(src6,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,4,7,10,13)));
+
+            __m128i G00 = _mm_shuffle_epi8(src1,_mm_setr_epi8(1,4,7,10,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+            G00 = _mm_or_si128(G00,_mm_shuffle_epi8(src2,_mm_setr_epi8(-1,-1,-1,-1,-1,0,3,6,9,12,15,-1,-1,-1,-1,-1)));
+            G00 = _mm_or_si128(G00,_mm_shuffle_epi8(src3,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,5,8,11,14)));
+
+            __m128i G01 = _mm_shuffle_epi8(src4,_mm_setr_epi8(1,4,7,10,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+            G01 = _mm_or_si128(G01,_mm_shuffle_epi8(src5,_mm_setr_epi8(-1,-1,-1,-1,-1,0,3,6,9,12,15,-1,-1,-1,-1,-1)));
+            G01 = _mm_or_si128(G01,_mm_shuffle_epi8(src6,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,5,8,11,14)));
+
+            __m128i R00 = _mm_shuffle_epi8(src1,_mm_setr_epi8(2,5,8,11,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+            R00 = _mm_or_si128(R00,_mm_shuffle_epi8(src2,_mm_setr_epi8(-1,-1,-1,-1,-1,1,4,7,10,13,-1,-1,-1,-1,-1,-1)));
+            R00 = _mm_or_si128(R00,_mm_shuffle_epi8(src3,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,3,6,9,12,15)));
+
+            __m128i R01 = _mm_shuffle_epi8(src4,_mm_setr_epi8(2,5,8,11,14,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1));
+            R01 = _mm_or_si128(R01,_mm_shuffle_epi8(src5,_mm_setr_epi8(-1,-1,-1,-1,-1,1,4,7,10,13,-1,-1,-1,-1,-1,-1)));
+            R01 = _mm_or_si128(R01,_mm_shuffle_epi8(src6,_mm_setr_epi8(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,3,6,9,12,15)));
+
+            __m256i B_256 = _mm256_combine_si128(B00,B01);
+            __m256i G_256 = _mm256_combine_si128(G00,G01);
+            __m256i R_256 = _mm256_combine_si128(R00,R01);
+
+            // 下面是进行计算
+            __m256i Result;
+            // 下面开始通道计算
+            if(color_mode==0) //red r-g
+            {
+                Result =  _mm256_cmpge_up_epu8(_mm256_subs_epu8(R_256,B_256),thres256);
+
+            }else // blue b-g
+            {
+                Result =  _mm256_cmpge_up_epu8(_mm256_subs_epu8(B_256,R_256),thres256);
+            }
+
+            _mm256_storeu_si256((__m256i *)dst, Result);
+        }
+
+
+        //剩余不足一个block的单独处理
+        for (int j = blockSize * block; j < height * width; ++j, src += 3, dst++) {
+            uint8_t _ch0 = src[0], _ch1 = src[1], _ch2 = src[2];
+
+            int dev = 0;
+
+            if(color_mode==0)
+                dev = _ch2-_ch0;
+            else
+                dev = _ch0-_ch2;
+
+            if (dev >= thres[0])
+            {
+                *dst = 255;
+            } else {
+                *dst = 0;
+            }
+        }
     }
 }

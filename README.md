@@ -51,6 +51,7 @@ All samples are in `cpu/examples/`.
 - [x] **ycrcbWithSeg**
 - [x] **weightedGrayWithSeg**
 - [x] **grayBRWithSeg**
+- [x] **grayBRWithSegStandard**
 
 ### Performance Table
 
@@ -62,6 +63,7 @@ Image Size: 1024 x 1280（H x W）
 |ycrcbWithSeg|6.68 - 6.75 |0.88 - 0.90|7.4 - 7.6|
 |weightedGrayWithSeg|1.56 - 1.69|0.39 - 0.46|3.39 - 4.33|
 |grayBRWithSeg|3.28 - 3.35| 0.69 - 0.71|4.6 - 4.8|
+|grayBRWithSegStandard|1.19 - 1.22|0.23 - 0.25|4.76 - 5.30|
 
 ---
 ## 3. CUDA

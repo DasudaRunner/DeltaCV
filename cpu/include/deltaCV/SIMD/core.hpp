@@ -77,6 +77,19 @@ namespace deltaCV
                        const unsigned char color_mode,
                        scalar thres1,scalar thres2);
 
+    /**  @brief: more details - >
+     *
+     * src: input(BGR image)
+     * dst: output
+     * width:
+     * height:
+     * color_mode： 0-> red, 1-> blue
+     * thres: b/r-r/g threshold
+     */
+    void grayBRWithSegStandard(unsigned char *src, unsigned char *dst,const int width,const int height,
+                              const unsigned char color_mode,
+                              scalar thres);
+
 }
 
 
